@@ -49,27 +49,27 @@ class CoreStoreMemoryImp implements CoreStore {
   }
 
   @override
-  Future<void> setBool(String key, bool value) async {
+  Future<void> setBool(String key, bool? value) async {
     _data[key] = value;
   }
 
   @override
-  Future<void> setDouble(String key, double value) async {
+  Future<void> setDouble(String key, double? value) async {
     _data[key] = value;
   }
 
   @override
-  Future<void> setInt(String key, int value) async {
+  Future<void> setInt(String key, int? value) async {
     _data[key] = value;
   }
 
   @override
-  Future<void> setString(String key, String value) async {
+  Future<void> setString(String key, String? value) async {
     _data[key] = value;
   }
 
   @override
-  Future<void> setStringList(String key, List<String> values) async {
+  Future<void> setStringList(String key, List<String>? values) async {
     _data[key] = values;
   }
 }

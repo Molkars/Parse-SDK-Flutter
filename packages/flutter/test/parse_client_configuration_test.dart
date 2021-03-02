@@ -20,7 +20,7 @@ void main() {
     expect(ParseCoreData().applicationId, 'appId');
     expect(ParseCoreData().serverUrl, 'serverUrl');
     expect(ParseCoreData().clientKey, 'clientKey');
-    expect(ParseCoreData().liveQueryURL, 'liveQueryUrl');
+    expect(ParseCoreData().liveQueryUrl, 'liveQueryUrl');
     expect(ParseCoreData().appName, 'appName');
     expect(ParseCoreData().appPackageName, 'somePackageName');
     expect(ParseCoreData().appVersion, 'someAppVersion');

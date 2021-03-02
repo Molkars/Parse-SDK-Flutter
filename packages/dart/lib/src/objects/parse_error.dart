@@ -2,11 +2,13 @@ part of flutter_parse_sdk;
 
 /// ParseException is used in [ParseResult] to inform the user of the exception
 class ParseError {
-  ParseError(
-      {this.code = -1,
-      this.message = 'Unknown error',
-      this.exception,
-      bool debug = false}) {
+  ParseError({
+    int? code,
+    String? message,
+    this.exception,
+    bool debug = false,
+  })  : message = message ?? 'Unknown error',
+        code = code ?? -1 {
     type = exceptions[code];
     if (debug) {
       print(toString());
@@ -70,8 +72,8 @@ class ParseError {
 
   final int code;
   final String message;
-  final Exception exception;
-  String type;
+  final Exception? exception;
+  String? type;
 
   @override
   String toString() {

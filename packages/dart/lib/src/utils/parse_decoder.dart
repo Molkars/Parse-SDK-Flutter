@@ -42,7 +42,7 @@ dynamic parseDecode(dynamic value) {
     return value;
   }
 
-  final Map<String, dynamic> map = value;
+  final Map<String, dynamic> map = value.cast<String, dynamic>();
 
   if (!map.containsKey('__type') && !map.containsKey('className')) {
     return _convertJSONObjectToMap(map);
@@ -53,16 +53,16 @@ dynamic parseDecode(dynamic value) {
     switch (map['__type']) {
       case 'Date':
         final String iso = map['iso'];
-        return _parseDateFormat.parse(iso);
+        return _parseDateFormat.tryParse(iso);
       case 'Bytes':
         final String val = map['base64'];
         return base64.decode(val);
       case 'Pointer':
       case 'Object':
         final String className = map['className'];
-        return ParseCoreData.instance.createObject(className).fromJson(map);
+        return ParseCoreData().createObject(className).fromJson(map);
       case 'File':
-        return ParseCoreData.instance
+        return ParseCoreData()
             .createFile(url: map['url'], name: map['name'])
             .fromJson(map);
       case 'GeoPoint':
@@ -85,7 +85,7 @@ dynamic parseDecode(dynamic value) {
         return ParseGeoPoint(
             latitude: latitude.toDouble(), longitude: longitude.toDouble());
       default:
-        return ParseCoreData.instance
+        return ParseCoreData()
             .createObject(map['className'])
             .fromJson(map);
     }

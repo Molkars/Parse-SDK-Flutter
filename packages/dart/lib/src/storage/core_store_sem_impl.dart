@@ -4,10 +4,10 @@ part of flutter_parse_sdk;
 class CoreStoreSembastImp implements CoreStore {
   CoreStoreSembastImp._internal(this._database, this._store);
 
-  static CoreStoreSembastImp _instance;
+  static CoreStoreSembastImp? _instance;
 
   static Future<CoreStore> getInstance(String dbPath,
-      {DatabaseFactory factory, String password = 'flutter_sdk'}) async {
+      {DatabaseFactory? factory, String password = 'flutter_sdk'}) async {
     if (_instance == null) {
       factory ??= !parseIsWeb ? databaseFactoryIo : databaseFactoryWeb;
       assert(() {
@@ -35,15 +35,15 @@ class CoreStoreSembastImp implements CoreStore {
           CoreStoreSembastImp._internal(db, StoreRef<String, String>.main());
     }
 
-    return _instance;
+    return _instance!;
   }
 
   final Database _database;
   final StoreRef<String, dynamic> _store;
 
   @override
-  Future<bool> clear() {
-    return _store.drop(_database);
+  Future<bool> clear() async {
+    return await _store.drop(_database);
   }
 
   @override
@@ -87,32 +87,35 @@ class CoreStoreSembastImp implements CoreStore {
   }
 
   @override
-  Future<void> remove(String key) {
-    return _store.record(key).delete(_database);
+  Future<void> remove(String key) async {
+    if (key == null) {
+      return;
+    }
+    return await _store.record(key).delete(_database);
   }
 
   @override
-  Future<void> setBool(String key, bool value) {
+  Future<void> setBool(String key, bool? value) {
     return _store.record(key).put(_database, value);
   }
 
   @override
-  Future<void> setDouble(String key, double value) {
+  Future<void> setDouble(String key, double? value) {
     return _store.record(key).put(_database, value);
   }
 
   @override
-  Future<void> setInt(String key, int value) {
+  Future<void> setInt(String key, int? value) {
     return _store.record(key).put(_database, value);
   }
 
   @override
-  Future<void> setString(String key, String value) {
+  Future<void> setString(String key, String? value) {
     return _store.record(key).put(_database, value);
   }
 
   @override
-  Future<void> setStringList(String key, List<String> values) {
+  Future<void> setStringList(String key, List<String>? values) {
     return _store.record(key).put(_database, values);
   }
 }

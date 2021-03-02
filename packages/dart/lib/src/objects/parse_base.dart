@@ -1,21 +1,23 @@
 part of flutter_parse_sdk;
 
 abstract class ParseBase {
+  ParseBase(this.parseClassName);
+
   String parseClassName;
-  Type type;
+  Type? type;
   final bool _dirty = false; // reserved property
-  final Map<String, dynamic> _unsavedChanges = Map<String, dynamic>();
-  final Map<String, dynamic> _savingChanges = Map<String, dynamic>();
+  final Map<String, dynamic> _unsavedChanges = <String, dynamic>{};
+  final Map<String, dynamic> _savingChanges = <String, dynamic>{};
 
   /// Stores all the values of a class
-  Map<String, dynamic> _objectData = Map<String, dynamic>();
+  Map<String, dynamic>? _objectData = <String, dynamic>{};
 
   /// Returns [String] objectId
-  String get objectId => get<String>(keyVarObjectId);
+  String? get objectId => get<String>(keyVarObjectId);
 
-  set objectId(String objectId) => set<String>(keyVarObjectId, objectId);
+  set objectId(String? objectId) => set<String>(keyVarObjectId, objectId);
 
-  bool isDirty({String key}) {
+  bool isDirty({String? key}) {
     if (key != null) {
       return _unsavedChanges[key] != null;
     }
@@ -41,31 +43,27 @@ abstract class ParseBase {
     if (_dirty || _unsavedChanges.isNotEmpty) {
       return true;
     }
-    bool match = false;
-    _getObjectData().forEach((String key, dynamic value) {
-      if (value is ParseObject && value._areChildrenDirty(seenObjects)) {
-        match = true;
-      }
-      return false;
-    });
-    return match;
+    return _getObjectData()
+            ?.values
+            .firstWhere((dynamic x) => x is ParseObject && x._areChildrenDirty(seenObjects), orElse: () => null) !=
+        null;
   }
 
   /// Returns [DateTime] createdAt
-  DateTime get createdAt {
+  DateTime? get createdAt {
     if (get<dynamic>(keyVarCreatedAt) is String) {
-      final String dateAsString = get<String>(keyVarCreatedAt);
-      return _parseDateFormat.parse(dateAsString);
+      final String dateAsString = get<String>(keyVarCreatedAt)!;
+      return _parseDateFormat.tryParse(dateAsString);
     } else {
       return get<DateTime>(keyVarCreatedAt);
     }
   }
 
   /// Returns [DateTime] updatedAt
-  DateTime get updatedAt {
+  DateTime? get updatedAt {
     if (get<dynamic>(keyVarUpdatedAt) is String) {
-      final String dateAsString = get<String>(keyVarUpdatedAt);
-      return _parseDateFormat.parse(dateAsString);
+      final String dateAsString = get<String>(keyVarUpdatedAt)!;
+      return _parseDateFormat.tryParse(dateAsString);
     } else {
       return get<DateTime>(keyVarUpdatedAt);
     }
@@ -74,7 +72,7 @@ abstract class ParseBase {
   /// Converts object to [String] in JSON format
   @protected
   Map<String, dynamic> toJson({
-    bool full,
+    bool? full,
     bool forApiRQ = false,
     bool allowCustomObjectId = false,
   }) {
@@ -87,16 +85,15 @@ abstract class ParseBase {
     }
 
     if (createdAt != null) {
-      map[keyVarCreatedAt] = _parseDateFormat.format(createdAt);
+      map[keyVarCreatedAt] = _parseDateFormat.format(createdAt!);
     }
 
     if (updatedAt != null) {
-      map[keyVarUpdatedAt] = _parseDateFormat.format(updatedAt);
+      map[keyVarUpdatedAt] = _parseDateFormat.format(updatedAt!);
     }
 
-    final Map<String, dynamic> target =
-        forApiRQ ? _unsavedChanges : _getObjectData();
-    target.forEach((String key, dynamic value) {
+    final Map<String, dynamic>? target = forApiRQ ? _unsavedChanges : _getObjectData();
+    target?.forEach((String key, dynamic value) {
       if (!map.containsKey(key)) {
         map[key] = parseEncode(value, full: full);
       }
@@ -120,7 +117,7 @@ abstract class ParseBase {
   @override
   String toString() => json.encode(toJson());
 
-  dynamic fromJson(Map<String, dynamic> objectData) {
+  dynamic fromJson(Map<String, dynamic>? objectData) {
     if (objectData == null) {
       return this;
     }
@@ -129,26 +126,25 @@ abstract class ParseBase {
       if (key == parseClassName || key == '__type') {
         // NO OP
       } else if (key == keyVarObjectId) {
-        _getObjectData()[keyVarObjectId] = value;
+        _getObjectData()![keyVarObjectId] = value;
       } else if (key == keyVarCreatedAt) {
         if (keyVarCreatedAt is String) {
-          _getObjectData()[keyVarCreatedAt] = _parseDateFormat.parse(value);
+          _getObjectData()![keyVarCreatedAt] = _parseDateFormat.tryParse(value);
         } else {
-          _getObjectData()[keyVarCreatedAt] = value;
+          _getObjectData()![keyVarCreatedAt] = value;
         }
       } else if (key == keyVarUpdatedAt) {
         if (keyVarUpdatedAt is String) {
-          _getObjectData()[keyVarUpdatedAt] = _parseDateFormat.parse(value);
+          _getObjectData()![keyVarUpdatedAt] = _parseDateFormat.tryParse(value);
         } else {
-          _getObjectData()[keyVarUpdatedAt] = _parseDateFormat.parse(value);
+          _getObjectData()![keyVarUpdatedAt] = _parseDateFormat.tryParse(value);
         }
       } else if (key == keyVarAcl) {
-        _getObjectData()[keyVarAcl] = ParseACL().fromJson(value);
+        _getObjectData()![keyVarAcl] = ParseACL().fromJson(value);
       } else {
-        _getObjectData()[key] = parseDecode(value);
+        _getObjectData()![key] = parseDecode(value);
       }
     });
-
     return this;
   }
 
@@ -158,23 +154,21 @@ abstract class ParseBase {
 
   /// Sets all the objects variables
   @protected
-  void _setObjectData(Map<String, dynamic> objectData) =>
-      _objectData = objectData;
+  void _setObjectData(Map<String, dynamic>? objectData) => _objectData = objectData;
 
   /// Returns the objects variables
   @protected
-  Map<String, dynamic> _getObjectData() =>
-      _objectData ?? Map<String, dynamic>();
+  Map<String, dynamic>? _getObjectData() => _objectData;
 
   bool containsValue(Object value) {
-    return _getObjectData().containsValue(value);
+    return _getObjectData()?.containsValue(value) ?? false;
   }
 
   bool containsKey(Object key) {
-    return _getObjectData().containsKey(key);
+    return _getObjectData()?.containsKey(key) ?? false;
   }
 
-  dynamic operator [](Object key) {
+  dynamic operator [](String key) {
     return get<dynamic>(key);
   }
 
@@ -197,18 +191,17 @@ abstract class ParseBase {
   /// To set an int, call setType<int> and an int will be saved
   /// [bool] forceUpdate is always true, if unsure as to whether an item is
   /// needed or not, set to false
-  void set<T>(String key, T value, {bool forceUpdate = true}) {
+  void set<T>(String key, T? value, {bool forceUpdate = true}) {
     if (value != null) {
-      if (_getObjectData().containsKey(key)) {
-        if (_getObjectData()[key] == value && !forceUpdate) {
+      if (_getObjectData()?.containsKey(key) ?? false) {
+        if (_getObjectData()![key] == value && !forceUpdate) {
           return;
         }
-        _getObjectData()[key] =
-            ParseMergeTool().mergeWithPrevious(_unsavedChanges[key], value);
+        _getObjectData()![key] = ParseMergeTool().mergeWithPrevious(_unsavedChanges[key], value);
       } else {
-        _getObjectData()[key] = value;
+        _getObjectData()![key] = value;
       }
-      _unsavedChanges[key] = _getObjectData()[key];
+      _unsavedChanges[key] = _getObjectData()![key];
     }
   }
 
@@ -219,8 +212,8 @@ abstract class ParseBase {
 
   ///Access the [ParseACL] governing this object.
   ParseACL getACL() {
-    if (_getObjectData().containsKey(keyVarAcl)) {
-      return _getObjectData()[keyVarAcl];
+    if (_getObjectData()?.containsKey(keyVarAcl) ?? false) {
+      return _getObjectData()![keyVarAcl];
     } else {
       return ParseACL();
     }
@@ -231,13 +224,13 @@ abstract class ParseBase {
   /// Returns null or [defaultValue] if provided. To get an int, call
   /// getType<int> and an int will be returned, null, or a defaultValue if
   /// provided
-  T get<T>(String key, {T defaultValue}) {
-    if (_getObjectData().containsKey(key)) {
-      if (T != null && _getObjectData()[key] is T) {
-        final T data = _getObjectData()[key];
+  T? get<T>(String key, {T? defaultValue}) {
+    if (_getObjectData()?.containsKey(key) ?? false) {
+      if (T != dynamic && _getObjectData()![key] is T) {
+        final T data = _getObjectData()![key];
         return data;
       } else {
-        return _getObjectData()[key];
+        return _getObjectData()![key];
       }
     } else {
       return defaultValue;
@@ -252,7 +245,7 @@ abstract class ParseBase {
       await unpin();
       final Map<String, dynamic> objectMap = parseEncode(this, full: true);
       final String json = jsonEncode(objectMap);
-      await ParseCoreData().getStore().setString(objectId, json);
+      await ParseCoreData().getStore().setString(objectId!, json);
       return true;
     } else {
       return false;
@@ -262,9 +255,9 @@ abstract class ParseBase {
   /// Saves item to simple key pair value storage
   ///
   /// Replicates Android SDK pin process and saves object to storage
-  Future<bool> unpin({String key}) async {
+  Future<bool> unpin({String? key}) async {
     if (objectId != null) {
-      await ParseCoreData().getStore().remove(key ?? objectId);
+      await ParseCoreData().getStore().remove(key ?? objectId!);
       return true;
     }
 
@@ -274,10 +267,10 @@ abstract class ParseBase {
   /// Saves item to simple key pair value storage
   ///
   /// Replicates Android SDK pin process and saves object to storage
-  dynamic fromPin(String objectId) async {
+  dynamic fromPin(String? objectId) async {
     if (objectId != null) {
       final CoreStore coreStore = ParseCoreData().getStore();
-      final String itemFromStore = await coreStore.getString(objectId);
+      final String? itemFromStore = await coreStore.getString(objectId);
 
       if (itemFromStore != null) {
         return fromJson(json.decode(itemFromStore));
@@ -290,22 +283,19 @@ abstract class ParseBase {
 
   /// Deprecated
   @Deprecated('Prefer to use parseClassName')
-  String className;
+  String? className;
 
   @Deprecated('Prefer to use parseClassName')
-  String getClassName() => parseClassName;
+  String? getClassName() => parseClassName;
 
   @Deprecated('Prefer to use parseClassName')
   String setClassName(String className) => parseClassName = className;
 
   @protected
-  @Deprecated(
-      'Prefer to use _getObjectData method, or operator [] for certain key.')
-  Map<String, dynamic> getObjectData() => _getObjectData();
+  @Deprecated('Prefer to use _getObjectData method, or operator [] for certain key.')
+  Map<String, dynamic>? getObjectData() => _getObjectData();
 
   @protected
-  @Deprecated(
-      'Prefer to use _setObjectData method, or operator [] for certain key.')
-  void setObjectData(Map<String, dynamic> objectData) =>
-      _setObjectData(objectData);
+  @Deprecated('Prefer to use _setObjectData method, or operator [] for certain key.')
+  void setObjectData(Map<String, dynamic> objectData) => _setObjectData(objectData);
 }

@@ -3,9 +3,9 @@ part of flutter_parse_sdk;
 class ParseConfig extends ParseObject {
   /// Creates an instance of ParseConfig so that you can grab all configs from the server
   ParseConfig({
-    bool debug,
-    ParseClient client,
-    bool autoSendSessionId,
+    bool? debug,
+    ParseClient? client,
+    bool? autoSendSessionId,
   }) : super(
           'config',
           debug: debug,
@@ -14,7 +14,7 @@ class ParseConfig extends ParseObject {
         );
 
   /// Gets all configs from the server
-  Future<ParseResponse> getConfigs() async {
+  Future<ParseResponse?> getConfigs() async {
     try {
       final String uri = '${ParseCoreData().serverUrl}/config';
       final ParseNetworkResponse result = await _client.get(uri);
@@ -26,7 +26,7 @@ class ParseConfig extends ParseObject {
   }
 
   /// Adds a new config
-  Future<ParseResponse> addConfig(String key, dynamic value) async {
+  Future<ParseResponse?> addConfig(String key, dynamic value) async {
     try {
       final String uri = '${ParseCoreData().serverUrl}/config';
       final String body =

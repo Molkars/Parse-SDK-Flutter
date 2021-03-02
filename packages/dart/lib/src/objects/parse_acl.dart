@@ -8,7 +8,7 @@ part of flutter_parse_sdk;
 class ParseACL {
   ///Creates an ACL where only the provided user has access.
   ///[owner] The only user that can read or write objects governed by this ACL.
-  ParseACL({ParseUser owner}) {
+  ParseACL({ParseUser? owner}) {
     if (owner != null) {
       setReadAccess(userId: owner.objectId, allowed: true);
       setWriteAccess(userId: owner.objectId, allowed: true);
@@ -16,17 +16,18 @@ class ParseACL {
   }
 
   final String _publicKEY = '*';
-  final Map<String, _ACLPermissions> _permissionsById =
-      <String, _ACLPermissions>{};
+  final Map<String, _ACLPermissions> _permissionsById = <String, _ACLPermissions>{};
 
   /// Helper for setting stuff
-  void _setPermissionsIfNonEmpty(
-      {@required String userId, bool readPermission, bool writePermission}) {
+  void _setPermissionsIfNonEmpty({
+    required String userId,
+    required bool readPermission,
+    required bool writePermission,
+  }) {
     if (!(readPermission || writePermission)) {
       _permissionsById.remove(userId);
     } else {
-      _permissionsById[userId] =
-          _ACLPermissions(readPermission, writePermission);
+      _permissionsById[userId] = _ACLPermissions(readPermission, writePermission);
     }
   }
 
@@ -36,7 +37,7 @@ class ParseACL {
   }
 
   ///Set whether the public is allowed to read this object.
-  void setPublicReadAccess({@required bool allowed}) {
+  void setPublicReadAccess({required bool allowed}) {
     setReadAccess(userId: _publicKEY, allowed: allowed);
   }
 
@@ -46,53 +47,47 @@ class ParseACL {
   }
 
   ///Set whether the public is allowed to write this object.
-  void setPublicWriteAccess({@required bool allowed}) {
+  void setPublicWriteAccess({required bool allowed}) {
     setWriteAccess(userId: _publicKEY, allowed: allowed);
   }
 
   ///Set whether the given user id is allowed to read this object.
-  void setReadAccess({@required String userId, bool allowed = true}) {
+  void setReadAccess({required String? userId, bool allowed = true}) {
     if (userId == null) {
       throw 'cannot setReadAccess for null userId';
     }
     final bool writePermission = getWriteAccess(userId: userId);
-    _setPermissionsIfNonEmpty(
-        userId: userId,
-        readPermission: allowed,
-        writePermission: writePermission);
+    _setPermissionsIfNonEmpty(userId: userId, readPermission: allowed, writePermission: writePermission);
   }
 
   /// Get whether the given user id is *explicitly* allowed to read this object. Even if this returns
   /// [false], the user may still be able to access it if getPublicReadAccess returns
   /// [true] or a role  that the user belongs to has read access.
-  bool getReadAccess({@required String userId}) {
+  bool getReadAccess({required String? userId}) {
     if (userId == null) {
       throw 'cannot getReadAccess for null userId';
     }
-    final _ACLPermissions _permissions = _permissionsById[userId];
+    final _ACLPermissions? _permissions = _permissionsById[userId];
     return _permissions != null && _permissions.getReadPermission();
   }
 
   ///Set whether the given user id is allowed to write this object.
-  void setWriteAccess({@required String userId, bool allowed = true}) {
+  void setWriteAccess({required String? userId, bool allowed = true}) {
     if (userId == null) {
       throw 'cannot setWriteAccess for null userId';
     }
     final bool readPermission = getReadAccess(userId: userId);
-    _setPermissionsIfNonEmpty(
-        userId: userId,
-        readPermission: readPermission,
-        writePermission: allowed);
+    _setPermissionsIfNonEmpty(userId: userId, readPermission: readPermission, writePermission: allowed);
   }
 
   ///Get whether the given user id is *explicitly* allowed to write this object. Even if this
   ///returns [false], the user may still be able to write it if getPublicWriteAccess returns
   ///[true] or a role that the user belongs to has write access.
-  bool getWriteAccess({@required String userId}) {
+  bool getWriteAccess({required String? userId}) {
     if (userId == null) {
       throw 'cannot getWriteAccess for null userId';
     }
-    final _ACLPermissions _permissions = _permissionsById[userId];
+    final _ACLPermissions? _permissions = _permissionsById[userId];
     return _permissions != null && _permissions.getWritePermission();
   }
 
@@ -124,6 +119,7 @@ class ParseACL {
 
 class _ACLPermissions {
   _ACLPermissions(this._readPermission, this._writePermission);
+
   final String _keyReadPermission = 'read';
   final String _keyWritePermission = 'write';
   final bool _readPermission;

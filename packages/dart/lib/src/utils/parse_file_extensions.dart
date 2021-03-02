@@ -4,9 +4,8 @@ part of flutter_parse_sdk;
 
 /// Get the extension type of the file
 @deprecated
-String getExtension(String contentType) {
-  if (_extensions.containsKey(contentType) &&
-      _extensions[contentType].containsKey('extensions')) {
+String? getExtension(String contentType) {
+  if (_extensions.containsKey(contentType) && _extensions[contentType].containsKey('extensions')) {
     return _extensions[contentType]['extensions'].first;
   }
   return null;
@@ -20,7 +19,7 @@ String getContentType(String extension) {
     extension = extension.substring(extension.lastIndexOf('.') + 1);
   }
 
-  String contentType = extensions[extension.toLowerCase()];
+  String? contentType = extensions[extension.toLowerCase()];
 
   contentType ??= 'application/octet-stream';
 
@@ -30,61 +29,33 @@ String getContentType(String extension) {
 /// Add content types based on extension to a map
 @deprecated
 Map<String, dynamic> _queryExtensions() {
-  Map<String, dynamic> extensions = Map<String, dynamic>();
-
-  if (extensions == null) {
-    extensions = <String, dynamic>{};
-    _extensions.forEach((dynamic type, dynamic typeInfo) {
-      if (typeInfo.containsKey('extensions')) {
-        for (String ext in typeInfo['extensions']) {
-          _extensions[ext] = type;
-        }
+  return <String, dynamic>{}..forEach((dynamic type, dynamic typeInfo) {
+    if (typeInfo.containsKey('extensions')) {
+      for (String ext in typeInfo['extensions']) {
+        _extensions[ext] = type;
       }
-    });
-  }
-
-  return extensions;
+    }
+  });
 }
 
 @deprecated
 final Map _extensions = <String, dynamic>{
   'application/1d-interleaved-parityfec': {'source': 'iana'},
-  'application/3gpdash-qoe-report+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/3gpdash-qoe-report+xml': {'source': 'iana', 'compressible': true},
   'application/3gpp-ims+xml': {'source': 'iana', 'compressible': true},
   'application/a2l': {'source': 'iana'},
   'application/activemessage': {'source': 'iana'},
   'application/activity+json': {'source': 'iana', 'compressible': true},
   'application/alto-costmap+json': {'source': 'iana', 'compressible': true},
-  'application/alto-costmapfilter+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/alto-costmapfilter+json': {'source': 'iana', 'compressible': true},
   'application/alto-directory+json': {'source': 'iana', 'compressible': true},
-  'application/alto-endpointcost+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/alto-endpointcostparams+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/alto-endpointprop+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/alto-endpointpropparams+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/alto-endpointcost+json': {'source': 'iana', 'compressible': true},
+  'application/alto-endpointcostparams+json': {'source': 'iana', 'compressible': true},
+  'application/alto-endpointprop+json': {'source': 'iana', 'compressible': true},
+  'application/alto-endpointpropparams+json': {'source': 'iana', 'compressible': true},
   'application/alto-error+json': {'source': 'iana', 'compressible': true},
   'application/alto-networkmap+json': {'source': 'iana', 'compressible': true},
-  'application/alto-networkmapfilter+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/alto-networkmapfilter+json': {'source': 'iana', 'compressible': true},
   'application/aml': {'source': 'iana'},
   'application/andrew-inset': {
     'source': 'iana',
@@ -231,35 +202,14 @@ final Map _extensions = <String, dynamic>{
   'application/edi-x12': {'source': 'iana', 'compressible': false},
   'application/edifact': {'source': 'iana', 'compressible': false},
   'application/efi': {'source': 'iana'},
-  'application/emergencycalldata.comment+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/emergencycalldata.control+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/emergencycalldata.deviceinfo+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/emergencycalldata.comment+xml': {'source': 'iana', 'compressible': true},
+  'application/emergencycalldata.control+xml': {'source': 'iana', 'compressible': true},
+  'application/emergencycalldata.deviceinfo+xml': {'source': 'iana', 'compressible': true},
   'application/emergencycalldata.ecall.msd': {'source': 'iana'},
-  'application/emergencycalldata.providerinfo+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/emergencycalldata.serviceinfo+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/emergencycalldata.subscriberinfo+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/emergencycalldata.veds+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/emergencycalldata.providerinfo+xml': {'source': 'iana', 'compressible': true},
+  'application/emergencycalldata.serviceinfo+xml': {'source': 'iana', 'compressible': true},
+  'application/emergencycalldata.subscriberinfo+xml': {'source': 'iana', 'compressible': true},
+  'application/emergencycalldata.veds+xml': {'source': 'iana', 'compressible': true},
   'application/emma+xml': {
     'source': 'iana',
     'compressible': true,
@@ -291,10 +241,7 @@ final Map _extensions = <String, dynamic>{
     'extensions': ['pfr']
   },
   'application/font-woff': {'source': 'iana', 'compressible': false},
-  'application/framework-attributes+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/framework-attributes+xml': {'source': 'iana', 'compressible': true},
   'application/geo+json': {
     'source': 'iana',
     'compressible': true,
@@ -455,44 +402,23 @@ final Map _extensions = <String, dynamic>{
     'extensions': ['mathml']
   },
   'application/mathml-content+xml': {'source': 'iana', 'compressible': true},
-  'application/mathml-presentation+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/mbms-associated-procedure-description+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/mathml-presentation+xml': {'source': 'iana', 'compressible': true},
+  'application/mbms-associated-procedure-description+xml': {'source': 'iana', 'compressible': true},
   'application/mbms-deregister+xml': {'source': 'iana', 'compressible': true},
   'application/mbms-envelope+xml': {'source': 'iana', 'compressible': true},
   'application/mbms-msk+xml': {'source': 'iana', 'compressible': true},
   'application/mbms-msk-response+xml': {'source': 'iana', 'compressible': true},
-  'application/mbms-protection-description+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/mbms-reception-report+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/mbms-protection-description+xml': {'source': 'iana', 'compressible': true},
+  'application/mbms-reception-report+xml': {'source': 'iana', 'compressible': true},
   'application/mbms-register+xml': {'source': 'iana', 'compressible': true},
-  'application/mbms-register-response+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/mbms-register-response+xml': {'source': 'iana', 'compressible': true},
   'application/mbms-schedule+xml': {'source': 'iana', 'compressible': true},
-  'application/mbms-user-service-description+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/mbms-user-service-description+xml': {'source': 'iana', 'compressible': true},
   'application/mbox': {
     'source': 'iana',
     'extensions': ['mbox']
   },
-  'application/media-policy-dataset+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/media-policy-dataset+xml': {'source': 'iana', 'compressible': true},
   'application/media_control+xml': {'source': 'iana', 'compressible': true},
   'application/mediaservercontrol+xml': {
     'source': 'iana',
@@ -945,49 +871,22 @@ final Map _extensions = <String, dynamic>{
   'application/vcard+xml': {'source': 'iana', 'compressible': true},
   'application/vemmi': {'source': 'iana'},
   'application/vividence.scriptfile': {'source': 'apache'},
-  'application/vnd.1000minds.decision-model+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.1000minds.decision-model+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp-prose+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.3gpp-prose-pc3ch+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.3gpp-prose-pc3ch+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp-v2x-local-service-information': {'source': 'iana'},
-  'application/vnd.3gpp.access-transfer-events+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.3gpp.access-transfer-events+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp.bsf+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp.gmop+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp.mc-signalling-ear': {'source': 'iana'},
   'application/vnd.3gpp.mcdata-payload': {'source': 'iana'},
   'application/vnd.3gpp.mcdata-signalling': {'source': 'iana'},
-  'application/vnd.3gpp.mcptt-affiliation-command+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.3gpp.mcptt-floor-request+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.3gpp.mcptt-info+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.3gpp.mcptt-location-info+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.3gpp.mcptt-mbms-usage-info+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.3gpp.mcptt-signed+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.3gpp.mcptt-affiliation-command+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.3gpp.mcptt-floor-request+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.3gpp.mcptt-info+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.3gpp.mcptt-location-info+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.3gpp.mcptt-mbms-usage-info+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.3gpp.mcptt-signed+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp.mid-call+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp.pic-bw-large': {
     'source': 'iana',
@@ -1003,23 +902,11 @@ final Map _extensions = <String, dynamic>{
   },
   'application/vnd.3gpp.sms': {'source': 'iana'},
   'application/vnd.3gpp.sms+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.3gpp.srvcc-ext+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.3gpp.srvcc-info+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.3gpp.state-and-event-info+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.3gpp.srvcc-ext+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.3gpp.srvcc-info+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.3gpp.state-and-event-info+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp.ussd+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.3gpp2.bcmcsinfo+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.3gpp2.bcmcsinfo+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.3gpp2.sms': {'source': 'iana'},
   'application/vnd.3gpp2.tcap': {
     'source': 'iana',
@@ -1123,10 +1010,7 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.apache.thrift.compact': {'source': 'iana'},
   'application/vnd.apache.thrift.json': {'source': 'iana'},
   'application/vnd.api+json': {'source': 'iana', 'compressible': true},
-  'application/vnd.apothekende.reservation+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.apothekende.reservation+json': {'source': 'iana', 'compressible': true},
   'application/vnd.apple.installer+xml': {
     'source': 'iana',
     'compressible': true,
@@ -1175,10 +1059,7 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.banana-accounting': {'source': 'iana'},
   'application/vnd.bbf.usp.msg': {'source': 'iana'},
   'application/vnd.bbf.usp.msg+json': {'source': 'iana', 'compressible': true},
-  'application/vnd.bekitzur-stech+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.bekitzur-stech+json': {'source': 'iana', 'compressible': true},
   'application/vnd.bint.med-content': {'source': 'iana'},
   'application/vnd.biopax.rdf+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.blink-idb-value-wrapper': {'source': 'iana'},
@@ -1200,10 +1081,7 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.cab-jscript': {'source': 'iana'},
   'application/vnd.canon-cpdl': {'source': 'iana'},
   'application/vnd.canon-lips': {'source': 'iana'},
-  'application/vnd.capasystems-pg+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.capasystems-pg+json': {'source': 'iana', 'compressible': true},
   'application/vnd.cendio.thinlinc.clientconf': {'source': 'iana'},
   'application/vnd.century-systems.tcp_stream': {'source': 'iana'},
   'application/vnd.chemdraw+xml': {
@@ -1250,22 +1128,12 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.collabio.xodocuments.document': {'source': 'iana'},
   'application/vnd.collabio.xodocuments.document-template': {'source': 'iana'},
   'application/vnd.collabio.xodocuments.presentation': {'source': 'iana'},
-  'application/vnd.collabio.xodocuments.presentation-template': {
-    'source': 'iana'
-  },
+  'application/vnd.collabio.xodocuments.presentation-template': {'source': 'iana'},
   'application/vnd.collabio.xodocuments.spreadsheet': {'source': 'iana'},
-  'application/vnd.collabio.xodocuments.spreadsheet-template': {
-    'source': 'iana'
-  },
+  'application/vnd.collabio.xodocuments.spreadsheet-template': {'source': 'iana'},
   'application/vnd.collection+json': {'source': 'iana', 'compressible': true},
-  'application/vnd.collection.doc+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.collection.next+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.collection.doc+json': {'source': 'iana', 'compressible': true},
+  'application/vnd.collection.next+json': {'source': 'iana', 'compressible': true},
   'application/vnd.comicbook+zip': {'source': 'iana', 'compressible': false},
   'application/vnd.comicbook-rar': {'source': 'iana'},
   'application/vnd.commerce-battelle': {'source': 'iana'},
@@ -1277,10 +1145,7 @@ final Map _extensions = <String, dynamic>{
     'source': 'iana',
     'extensions': ['cdbcmsg']
   },
-  'application/vnd.coreos.ignition+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.coreos.ignition+json': {'source': 'iana', 'compressible': true},
   'application/vnd.cosmocaller': {
     'source': 'iana',
     'extensions': ['cmc']
@@ -1332,15 +1197,9 @@ final Map _extensions = <String, dynamic>{
     'source': 'apache',
     'extensions': ['pcurl']
   },
-  'application/vnd.cyan.dean.root+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.cyan.dean.root+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.cybank': {'source': 'iana'},
-  'application/vnd.d2l.coursepackage1p0+zip': {
-    'source': 'iana',
-    'compressible': false
-  },
+  'application/vnd.d2l.coursepackage1p0+zip': {'source': 'iana', 'compressible': false},
   'application/vnd.dart': {
     'source': 'iana',
     'compressible': true,
@@ -1418,34 +1277,13 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.dvb.ipdcroaming': {'source': 'iana'},
   'application/vnd.dvb.iptv.alfec-base': {'source': 'iana'},
   'application/vnd.dvb.iptv.alfec-enhancement': {'source': 'iana'},
-  'application/vnd.dvb.notif-aggregate-root+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.dvb.notif-container+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.dvb.notif-generic+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.dvb.notif-ia-msglist+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.dvb.notif-ia-registration-request+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.dvb.notif-ia-registration-response+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.dvb.notif-init+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.dvb.notif-aggregate-root+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.dvb.notif-container+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.dvb.notif-generic+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.dvb.notif-ia-msglist+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.dvb.notif-ia-registration-request+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.dvb.notif-ia-registration-response+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.dvb.notif-init+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.dvb.pfr': {'source': 'iana'},
   'application/vnd.dvb.service': {
     'source': 'iana',
@@ -1471,10 +1309,7 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.ecowin.seriesupdate': {'source': 'iana'},
   'application/vnd.efi.img': {'source': 'iana'},
   'application/vnd.efi.iso': {'source': 'iana'},
-  'application/vnd.emclient.accessrequest+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.emclient.accessrequest+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.enliven': {
     'source': 'iana',
     'extensions': ['nml']
@@ -1502,10 +1337,7 @@ final Map _extensions = <String, dynamic>{
     'extensions': ['ssf']
   },
   'application/vnd.ericsson.quickcall': {'source': 'iana'},
-  'application/vnd.espass-espass+zip': {
-    'source': 'iana',
-    'compressible': false
-  },
+  'application/vnd.espass-espass+zip': {'source': 'iana', 'compressible': false},
   'application/vnd.eszigno3+xml': {
     'source': 'iana',
     'compressible': true,
@@ -1515,45 +1347,18 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.etsi.asic-e+zip': {'source': 'iana', 'compressible': false},
   'application/vnd.etsi.asic-s+zip': {'source': 'iana', 'compressible': false},
   'application/vnd.etsi.cug+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.etsi.iptvcommand+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.etsi.iptvdiscovery+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.etsi.iptvprofile+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.etsi.iptvsad-bc+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.etsi.iptvsad-cod+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.etsi.iptvsad-npvr+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.etsi.iptvservice+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.etsi.iptvcommand+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.etsi.iptvdiscovery+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.etsi.iptvprofile+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.etsi.iptvsad-bc+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.etsi.iptvsad-cod+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.etsi.iptvsad-npvr+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.etsi.iptvservice+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.etsi.iptvsync+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.etsi.iptvueprofile+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.etsi.iptvueprofile+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.etsi.mcid+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.etsi.mheg5': {'source': 'iana'},
-  'application/vnd.etsi.overload-control-policy-dataset+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.etsi.overload-control-policy-dataset+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.etsi.pstn+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.etsi.sci+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.etsi.simservs+xml': {'source': 'iana', 'compressible': true},
@@ -1564,10 +1369,7 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.evolv.ecig.profile': {'source': 'iana'},
   'application/vnd.evolv.ecig.settings': {'source': 'iana'},
   'application/vnd.evolv.ecig.theme': {'source': 'iana'},
-  'application/vnd.exstream-empower+zip': {
-    'source': 'iana',
-    'compressible': false
-  },
+  'application/vnd.exstream-empower+zip': {'source': 'iana', 'compressible': false},
   'application/vnd.ezpix-album': {
     'source': 'iana',
     'extensions': ['ez2']
@@ -1694,9 +1496,7 @@ final Map _extensions = <String, dynamic>{
   },
   'application/vnd.gerber': {'source': 'iana'},
   'application/vnd.globalplatform.card-content-mgt': {'source': 'iana'},
-  'application/vnd.globalplatform.card-content-mgt-response': {
-    'source': 'iana'
-  },
+  'application/vnd.globalplatform.card-content-mgt-response': {'source': 'iana'},
   'application/vnd.gmx': {
     'source': 'iana',
     'extensions': ['gmx']
@@ -1724,14 +1524,8 @@ final Map _extensions = <String, dynamic>{
     'extensions': ['kmz']
   },
   'application/vnd.gov.sk.e-form+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.gov.sk.e-form+zip': {
-    'source': 'iana',
-    'compressible': false
-  },
-  'application/vnd.gov.sk.xmldatacontainer+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.gov.sk.e-form+zip': {'source': 'iana', 'compressible': false},
+  'application/vnd.gov.sk.xmldatacontainer+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.grafeq': {
     'source': 'iana',
     'extensions': ['gqf', 'gqs']
@@ -1848,14 +1642,8 @@ final Map _extensions = <String, dynamic>{
     'source': 'iana',
     'extensions': ['igl']
   },
-  'application/vnd.imagemeter.folder+zip': {
-    'source': 'iana',
-    'compressible': false
-  },
-  'application/vnd.imagemeter.image+zip': {
-    'source': 'iana',
-    'compressible': false
-  },
+  'application/vnd.imagemeter.folder+zip': {'source': 'iana', 'compressible': false},
+  'application/vnd.imagemeter.image+zip': {'source': 'iana', 'compressible': false},
   'application/vnd.immervision-ivp': {
     'source': 'iana',
     'extensions': ['ivp']
@@ -1867,40 +1655,16 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.ims.imsccv1p1': {'source': 'iana'},
   'application/vnd.ims.imsccv1p2': {'source': 'iana'},
   'application/vnd.ims.imsccv1p3': {'source': 'iana'},
-  'application/vnd.ims.lis.v2.result+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.ims.lti.v2.toolconsumerprofile+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.ims.lti.v2.toolproxy+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.ims.lti.v2.toolproxy.id+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.ims.lti.v2.toolsettings+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.ims.lti.v2.toolsettings.simple+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.informedcontrol.rms+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.ims.lis.v2.result+json': {'source': 'iana', 'compressible': true},
+  'application/vnd.ims.lti.v2.toolconsumerprofile+json': {'source': 'iana', 'compressible': true},
+  'application/vnd.ims.lti.v2.toolproxy+json': {'source': 'iana', 'compressible': true},
+  'application/vnd.ims.lti.v2.toolproxy.id+json': {'source': 'iana', 'compressible': true},
+  'application/vnd.ims.lti.v2.toolsettings+json': {'source': 'iana', 'compressible': true},
+  'application/vnd.ims.lti.v2.toolsettings.simple+json': {'source': 'iana', 'compressible': true},
+  'application/vnd.informedcontrol.rms+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.informix-visionary': {'source': 'iana'},
   'application/vnd.infotech.project': {'source': 'iana'},
-  'application/vnd.infotech.project+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.infotech.project+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.innopath.wamp.notification': {'source': 'iana'},
   'application/vnd.insors.igm': {
     'source': 'iana',
@@ -1924,34 +1688,13 @@ final Map _extensions = <String, dynamic>{
     'source': 'iana',
     'extensions': ['qfx']
   },
-  'application/vnd.iptc.g2.catalogitem+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.iptc.g2.conceptitem+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.iptc.g2.knowledgeitem+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.iptc.g2.newsitem+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.iptc.g2.newsmessage+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.iptc.g2.packageitem+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.iptc.g2.planningitem+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.iptc.g2.catalogitem+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.iptc.g2.conceptitem+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.iptc.g2.knowledgeitem+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.iptc.g2.newsitem+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.iptc.g2.newsmessage+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.iptc.g2.packageitem+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.iptc.g2.planningitem+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.ipunplugged.rcprofile': {
     'source': 'iana',
     'extensions': ['rcprofile']
@@ -2057,10 +1800,7 @@ final Map _extensions = <String, dynamic>{
     'extensions': ['lasxml']
   },
   'application/vnd.leap+json': {'source': 'iana', 'compressible': true},
-  'application/vnd.liberty-request+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.liberty-request+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.llamagraphics.life-balance.desktop': {
     'source': 'iana',
     'extensions': ['lbd']
@@ -2103,18 +1843,9 @@ final Map _extensions = <String, dynamic>{
     'extensions': ['portpkg']
   },
   'application/vnd.mapbox-vector-tile': {'source': 'iana'},
-  'application/vnd.marlin.drm.actiontoken+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.marlin.drm.conftoken+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.marlin.drm.license+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.marlin.drm.actiontoken+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.marlin.drm.conftoken+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.marlin.drm.license+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.marlin.drm.mdcf': {'source': 'iana'},
   'application/vnd.mason+json': {'source': 'iana', 'compressible': true},
   'application/vnd.maxmind.maxmind-db': {'source': 'iana'},
@@ -2255,10 +1986,7 @@ final Map _extensions = <String, dynamic>{
     'source': 'iana',
     'extensions': ['lrm']
   },
-  'application/vnd.ms-office.activex+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.ms-office.activex+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.ms-officetheme': {
     'source': 'iana',
     'extensions': ['thmx']
@@ -2277,10 +2005,7 @@ final Map _extensions = <String, dynamic>{
     'source': 'apache',
     'extensions': ['stl']
   },
-  'application/vnd.ms-playready.initiator+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.ms-playready.initiator+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.ms-powerpoint': {
     'source': 'iana',
     'compressible': false,
@@ -2306,18 +2031,9 @@ final Map _extensions = <String, dynamic>{
     'source': 'iana',
     'extensions': ['potm']
   },
-  'application/vnd.ms-printdevicecapabilities+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.ms-printing.printticket+xml': {
-    'source': 'apache',
-    'compressible': true
-  },
-  'application/vnd.ms-printschematicket+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.ms-printdevicecapabilities+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.ms-printing.printticket+xml': {'source': 'apache', 'compressible': true},
+  'application/vnd.ms-printschematicket+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.ms-project': {
     'source': 'iana',
     'extensions': ['mpp', 'mpt']
@@ -2404,24 +2120,12 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.nokia.catalogs': {'source': 'iana'},
   'application/vnd.nokia.conml+wbxml': {'source': 'iana'},
   'application/vnd.nokia.conml+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.nokia.iptv.config+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.nokia.iptv.config+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.nokia.isds-radio-presets': {'source': 'iana'},
   'application/vnd.nokia.landmark+wbxml': {'source': 'iana'},
-  'application/vnd.nokia.landmark+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.nokia.landmarkcollection+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.nokia.n-gage.ac+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.nokia.landmark+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.nokia.landmarkcollection+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.nokia.n-gage.ac+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.nokia.n-gage.data': {
     'source': 'iana',
     'extensions': ['ngdat']
@@ -2533,38 +2237,17 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.obn': {'source': 'iana'},
   'application/vnd.ocf+cbor': {'source': 'iana'},
   'application/vnd.oftn.l10n+json': {'source': 'iana', 'compressible': true},
-  'application/vnd.oipf.contentaccessdownload+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oipf.contentaccessstreaming+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oipf.contentaccessdownload+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oipf.contentaccessstreaming+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oipf.cspg-hexbinary': {'source': 'iana'},
   'application/vnd.oipf.dae.svg+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.oipf.dae.xhtml+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oipf.mippvcontrolmessage+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oipf.dae.xhtml+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oipf.mippvcontrolmessage+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oipf.pae.gem': {'source': 'iana'},
-  'application/vnd.oipf.spdiscovery+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oipf.spdiscovery+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oipf.spdlist+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.oipf.ueprofile+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oipf.userprofile+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oipf.ueprofile+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oipf.userprofile+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.olpc-sugar': {
     'source': 'iana',
     'extensions': ['xo']
@@ -2572,54 +2255,24 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.oma-scws-config': {'source': 'iana'},
   'application/vnd.oma-scws-http-request': {'source': 'iana'},
   'application/vnd.oma-scws-http-response': {'source': 'iana'},
-  'application/vnd.oma.bcast.associated-procedure-parameter+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.bcast.drm-trigger+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.bcast.associated-procedure-parameter+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.bcast.drm-trigger+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.bcast.imd+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.bcast.ltkm': {'source': 'iana'},
-  'application/vnd.oma.bcast.notification+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.bcast.notification+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.bcast.provisioningtrigger': {'source': 'iana'},
   'application/vnd.oma.bcast.sgboot': {'source': 'iana'},
-  'application/vnd.oma.bcast.sgdd+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.bcast.sgdd+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.bcast.sgdu': {'source': 'iana'},
   'application/vnd.oma.bcast.simple-symbol-container': {'source': 'iana'},
-  'application/vnd.oma.bcast.smartcard-trigger+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.bcast.sprov+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.bcast.smartcard-trigger+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.bcast.sprov+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.bcast.stkm': {'source': 'iana'},
-  'application/vnd.oma.cab-address-book+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.cab-feature-handler+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.cab-address-book+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.cab-feature-handler+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.cab-pcc+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.oma.cab-subs-invite+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.cab-user-prefs+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.cab-subs-invite+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.cab-user-prefs+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.dcd': {'source': 'iana'},
   'application/vnd.oma.dcdc': {'source': 'iana'},
   'application/vnd.oma.dd2+xml': {
@@ -2628,42 +2281,18 @@ final Map _extensions = <String, dynamic>{
     'extensions': ['dd2']
   },
   'application/vnd.oma.drm.risd+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.oma.group-usage-list+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.group-usage-list+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.lwm2m+json': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.lwm2m+tlv': {'source': 'iana'},
   'application/vnd.oma.pal+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.oma.poc.detailed-progress-report+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.poc.final-report+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.poc.groups+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.poc.invocation-descriptor+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.poc.optimized-progress-report+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.poc.detailed-progress-report+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.poc.final-report+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.poc.groups+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.poc.invocation-descriptor+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.poc.optimized-progress-report+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.oma.push': {'source': 'iana'},
-  'application/vnd.oma.scidm.messages+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oma.xcap-directory+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.oma.scidm.messages+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oma.xcap-directory+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.omads-email+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.omads-file+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.omads-folder+xml': {'source': 'iana', 'compressible': true},
@@ -2681,234 +2310,226 @@ final Map _extensions = <String, dynamic>{
     'source': 'apache',
     'extensions': ['oxt']
   },
-  'application/vnd.openstreetmap.data+xml': {
+  'application/vnd.openstreetmap.data+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.custom-properties+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.customxmlproperties+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.drawing+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.drawingml.chart+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.drawingml.chartshapes+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.drawingml.diagramcolors+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.drawingml.diagramdata+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.drawingml.diagramlayout+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.drawingml.diagramstyle+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.extended-properties+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.presentationml.commentauthors+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.custom-properties+xml': {
+  'application/vnd.openxmlformats-officedocument.presentationml.comments+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.presentationml.handoutmaster+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.customxmlproperties+xml': {
+  'application/vnd.openxmlformats-officedocument.presentationml.notesmaster+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.drawing+xml': {
+  'application/vnd.openxmlformats-officedocument.presentationml.notesslide+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.drawingml.chart+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.drawingml.chartshapes+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.drawingml.diagramcolors+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.drawingml.diagramdata+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.drawingml.diagramlayout+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.drawingml.diagramstyle+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.extended-properties+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.presentationml.commentauthors+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.comments+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.presentationml.handoutmaster+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.notesmaster+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.notesslide+xml':
-      {'source': 'iana', 'compressible': true},
   'application/vnd.openxmlformats-officedocument.presentationml.presentation': {
     'source': 'iana',
     'compressible': false,
     'extensions': ['pptx']
   },
-  'application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.presprops+xml':
-      {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.presentationml.presprops+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
   'application/vnd.openxmlformats-officedocument.presentationml.slide': {
     'source': 'iana',
     'extensions': ['sldx']
   },
-  'application/vnd.openxmlformats-officedocument.presentationml.slide+xml': {
+  'application/vnd.openxmlformats-officedocument.presentationml.slide+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.presentationml.slidelayout+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.presentationml.slidelayout+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.slidemaster+xml':
-      {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.presentationml.slidemaster+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
   'application/vnd.openxmlformats-officedocument.presentationml.slideshow': {
     'source': 'iana',
     'extensions': ['ppsx']
   },
-  'application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.slideupdateinfo+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.tablestyles+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.tags+xml': {
+  'application/vnd.openxmlformats-officedocument.presentationml.slideshow.main+xml': {
     'source': 'iana',
     'compressible': true
   },
+  'application/vnd.openxmlformats-officedocument.presentationml.slideupdateinfo+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.presentationml.tablestyles+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.presentationml.tags+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.openxmlformats-officedocument.presentationml.template': {
     'source': 'iana',
     'extensions': ['potx']
   },
-  'application/vnd.openxmlformats-officedocument.presentationml.template.main+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.presentationml.viewprops+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.calcchain+xml': {
+  'application/vnd.openxmlformats-officedocument.presentationml.template.main+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.chartsheet+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.comments+xml': {
+  'application/vnd.openxmlformats-officedocument.presentationml.viewprops+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.connections+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.dialogsheet+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.externallink+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.pivotcachedefinition+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.pivotcacherecords+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.pivottable+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.querytable+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.revisionheaders+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.revisionlog+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sharedstrings+xml':
-      {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.calcchain+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.chartsheet+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.comments+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.connections+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.dialogsheet+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.externallink+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.pivotcachedefinition+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.pivotcacherecords+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.pivottable+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.querytable+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.revisionheaders+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.revisionlog+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sharedstrings+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': {
     'source': 'iana',
     'compressible': false,
     'extensions': ['xlsx']
   },
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheetmetadata+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml': {
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml': {
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheetmetadata+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.tablesinglecells+xml':
-      {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.tablesinglecells+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
   'application/vnd.openxmlformats-officedocument.spreadsheetml.template': {
     'source': 'iana',
     'extensions': ['xltx']
   },
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.usernames+xml': {
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.template.main+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.volatiledependencies+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml': {
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.usernames+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.volatiledependencies+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.theme+xml': {
+  'application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.theme+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.themeoverride+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.vmldrawing': {'source': 'iana'},
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.themeoverride+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.openxmlformats-officedocument.vmldrawing': {
-    'source': 'iana'
-  },
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml':
-      {'source': 'iana', 'compressible': true},
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document': {
     'source': 'iana',
     'compressible': false,
     'extensions': ['docx']
   },
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document.glossary+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.fonttable+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml': {
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document.glossary+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml': {
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml': {
     'source': 'iana',
     'compressible': true
   },
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.endnotes+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.fonttable+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml': {
+    'source': 'iana',
+    'compressible': true
+  },
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.openxmlformats-officedocument.wordprocessingml.template': {
     'source': 'iana',
     'extensions': ['dotx']
   },
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.websettings+xml':
-      {'source': 'iana', 'compressible': true},
-  'application/vnd.openxmlformats-package.core-properties+xml': {
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.template.main+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-package.digital-signature-xmlsignature+xml': {
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.websettings+xml': {
     'source': 'iana',
     'compressible': true
   },
-  'application/vnd.openxmlformats-package.relationships+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.oracle.resource+json': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.openxmlformats-package.core-properties+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-package.digital-signature-xmlsignature+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.openxmlformats-package.relationships+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.oracle.resource+json': {'source': 'iana', 'compressible': true},
   'application/vnd.orange.indata': {'source': 'iana'},
   'application/vnd.osa.netdeploy': {'source': 'iana'},
   'application/vnd.osgeo.mapguide.package': {
@@ -2956,10 +2577,7 @@ final Map _extensions = <String, dynamic>{
     'source': 'iana',
     'extensions': ['wg']
   },
-  'application/vnd.poc.group-advertisement+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.poc.group-advertisement+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.pocketlearn': {
     'source': 'iana',
     'extensions': ['plf']
@@ -2992,10 +2610,7 @@ final Map _extensions = <String, dynamic>{
     'extensions': ['ptid']
   },
   'application/vnd.pwg-multiplexed': {'source': 'iana'},
-  'application/vnd.pwg-xhtml-print+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.pwg-xhtml-print+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.qualcomm.brew-app-res': {'source': 'iana'},
   'application/vnd.quarantainenet': {'source': 'iana'},
   'application/vnd.quark.quarkxpress': {
@@ -3005,58 +2620,19 @@ final Map _extensions = <String, dynamic>{
   'application/vnd.quobject-quoxdocument': {'source': 'iana'},
   'application/vnd.radisys.moml+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.radisys.msml+xml': {'source': 'iana', 'compressible': true},
-  'application/vnd.radisys.msml-audit+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-audit-conf+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-audit-conn+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-audit-dialog+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-audit-stream+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-conf+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-dialog+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-dialog-base+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-dialog-fax-detect+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-dialog-fax-sendrecv+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-dialog-group+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-dialog-speech+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.radisys.msml-dialog-transform+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.radisys.msml-audit+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-audit-conf+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-audit-conn+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-audit-dialog+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-audit-stream+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-conf+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-dialog+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-dialog-base+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-dialog-fax-detect+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-dialog-fax-sendrecv+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-dialog-group+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-dialog-speech+xml': {'source': 'iana', 'compressible': true},
+  'application/vnd.radisys.msml-dialog-transform+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.rainstor.data': {'source': 'iana'},
   'application/vnd.rapid': {'source': 'iana'},
   'application/vnd.rar': {'source': 'iana'},
@@ -3165,10 +2741,7 @@ final Map _extensions = <String, dynamic>{
     'source': 'iana',
     'extensions': ['teacher']
   },
-  'application/vnd.software602.filler.form+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.software602.filler.form+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.software602.filler.form-xml-zip': {'source': 'iana'},
   'application/vnd.solent.sdkm+xml': {
     'source': 'iana',
@@ -3307,14 +2880,8 @@ final Map _extensions = <String, dynamic>{
     'source': 'iana',
     'extensions': ['pcap', 'cap', 'dmp']
   },
-  'application/vnd.think-cell.ppttc+json': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/vnd.tmd.mediaflex.api+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/vnd.think-cell.ppttc+json': {'source': 'iana', 'compressible': true},
+  'application/vnd.tmd.mediaflex.api+xml': {'source': 'iana', 'compressible': true},
   'application/vnd.tml': {'source': 'iana'},
   'application/vnd.tmobile-livetv': {
     'source': 'iana',
@@ -3647,17 +3214,7 @@ final Map _extensions = <String, dynamic>{
   },
   'application/x-director': {
     'source': 'apache',
-    'extensions': [
-      'dir',
-      'dcr',
-      'dxr',
-      'cst',
-      'cct',
-      'cxt',
-      'w3d',
-      'fgd',
-      'swa'
-    ]
+    'extensions': ['dir', 'dcr', 'dxr', 'cst', 'cct', 'cxt', 'w3d', 'fgd', 'swa']
   },
   'application/x-doom': {
     'source': 'apache',
@@ -4086,14 +3643,8 @@ final Map _extensions = <String, dynamic>{
   'application/xcap-el+xml': {'source': 'iana', 'compressible': true},
   'application/xcap-error+xml': {'source': 'iana', 'compressible': true},
   'application/xcap-ns+xml': {'source': 'iana', 'compressible': true},
-  'application/xcon-conference-info+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
-  'application/xcon-conference-info-diff+xml': {
-    'source': 'iana',
-    'compressible': true
-  },
+  'application/xcon-conference-info+xml': {'source': 'iana', 'compressible': true},
+  'application/xcon-conference-info-diff+xml': {'source': 'iana', 'compressible': true},
   'application/xenc+xml': {
     'source': 'iana',
     'compressible': true,

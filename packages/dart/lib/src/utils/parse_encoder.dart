@@ -9,7 +9,7 @@ dynamic dateTimeEncoder(dynamic item) {
 }
 
 /// Custom json encoder for types related to parse
-dynamic parseEncode(dynamic value, {bool full}) {
+dynamic parseEncode(dynamic value, {bool? full}) {
   full ??= false;
 
   if (value is Uint8List) {
@@ -70,8 +70,8 @@ Map<String, dynamic> _encodeDate(DateTime date) {
   };
 }
 
-Map<String, String> encodeObject(String className, String objectId) {
-  return <String, String>{
+Map<String, String?> encodeObject(String? className, String? objectId) {
+  return <String, String?>{
     '__type': 'Pointer',
     keyVarClassName: className,
     keyVarObjectId: objectId

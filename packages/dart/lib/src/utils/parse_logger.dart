@@ -1,7 +1,7 @@
 part of flutter_parse_sdk;
 
 void logAPIResponse(
-    String className, String type, ParseResponse parseResponse) {
+    String className, String type, ParseResponse? parseResponse) {
   const String spacer = ' \n';
   String responseString = '';
 
@@ -9,7 +9,9 @@ void logAPIResponse(
   responseString += '\nClass: $className';
   responseString += '\nFunction: $type';
 
-  if (parseResponse.success) {
+  if (parseResponse == null) {
+    responseString += '\nResponse was null';
+  } else if (parseResponse.success) {
     responseString += '\nStatus Code: ${parseResponse.statusCode}';
     if (parseResponse.result != null) {
       responseString += '\nPayload: ${parseResponse.result.toString()}';
@@ -17,13 +19,13 @@ void logAPIResponse(
       responseString += '\nReponse: OK';
     }
   } else if (!parseResponse.success) {
-    responseString += '\nStatus Code: ${parseResponse.error.code}';
-    responseString += '\nType: ${parseResponse.error.type}';
+    responseString += '\nStatus Code: ${parseResponse.error!.code}';
+    responseString += '\nType: ${parseResponse.error!.type}';
 
     final String errorOrException =
-        parseResponse.error.exception != null ? 'Exception' : 'Error';
+        parseResponse.error?.exception != null ? 'Exception' : 'Error';
 
-    responseString += '\n$errorOrException: ${parseResponse.error.message}';
+    responseString += '\n$errorOrException: ${parseResponse.error?.message}';
   }
 
   responseString += '\n╰-- \n';
@@ -32,10 +34,10 @@ void logAPIResponse(
 }
 
 void logRequest(
-    String appName, String className, String type, String uri, String body) {
+    String? appName, String className, String type, String uri, String body) {
   String requestString = ' \n';
-  String name = appName;
-  if (name.isNotEmpty) {
+  String? name = appName;
+  if (name != null && name.isNotEmpty) {
     name = '$appName ';
   }
   requestString += '----\n${name}API Request ($className : $type) :';

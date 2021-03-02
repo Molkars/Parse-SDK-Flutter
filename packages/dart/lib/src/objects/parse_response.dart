@@ -2,7 +2,13 @@ part of flutter_parse_sdk;
 
 class ParseResponse {
   bool success = false;
-  int statusCode = -1;
+  int _statusCode = -1;
+
+  set statusCode(int? value) {
+    _statusCode = value ?? -1;
+  }
+
+  int get statusCode => _statusCode;
 
   /// If result is a singular result, i.e. getByObjectID
   ///
@@ -12,7 +18,7 @@ class ParseResponse {
 
   /// All results stored as a list - Even if only one response is returned
   // ignore: always_specify_types
-  List results;
+  List? results;
   int count = 0;
-  ParseError error;
+  ParseError? error;
 }

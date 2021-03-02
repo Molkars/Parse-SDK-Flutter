@@ -5,7 +5,7 @@ ParseResponse buildParseResponseWithException(Exception exception) {
   final ParseResponse response = ParseResponse();
   if (exception is DioError) {
     try {
-      Map<String, dynamic> errorResponse;
+      Map<String, dynamic>? errorResponse;
 
       try {
         errorResponse =
@@ -22,8 +22,8 @@ ParseResponse buildParseResponseWithException(Exception exception) {
       );
     } catch (error) {
       response.error = ParseError(
-          message: "Failed to build ParseResponse with exception",
-          exception: error);
+          message: 'Failed to build ParseResponse with exception',
+          exception: error is Exception ? error : Exception(error));
     }
   } else {
     response.error =
